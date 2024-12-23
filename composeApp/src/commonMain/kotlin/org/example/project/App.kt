@@ -22,6 +22,7 @@ import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import org.example.project.models.Book
 import org.example.project.ui.ChapterView
+import org.example.project.ui.HadithView
 import org.example.project.ui.Home
 import org.example.project.ui.MainViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -68,6 +69,11 @@ fun App() {
                         val book = it.toRoute<Book>()
                         ChapterView(bookSlug = book.bookSlug, modifier = Modifier.padding(innerPadding), navController = navController)
                     }
+
+                    composable<HadithScreen> {
+                        val hadith = it.toRoute<HadithScreen>()
+                        HadithView(hadith)
+                    }
                 }
             }
         )
@@ -77,3 +83,6 @@ fun App() {
 
 @Serializable
 object BooksScreen
+
+@Serializable
+data class HadithScreen(val bookSlug: String, val chapter: Int)

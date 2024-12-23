@@ -27,6 +27,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.example.project.HadithScreen
 import org.example.project.api.API
 import org.example.project.models.Chapters
 
@@ -44,25 +45,25 @@ fun ChapterView(bookSlug: String, modifier: Modifier = Modifier, navController: 
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        chapters.value?.chapters?.let {
+        chapters.value?.chapters?.let { chapters ->
             LazyColumn(modifier = modifier.fillMaxWidth()) {
-                items(it) { book ->
+                items(chapters) { chapter ->
                     Column(
                         modifier = Modifier
                             .padding(vertical = 8.dp)
                             .padding(horizontal = 16.dp)
                             .clickable {
-
+                                navController.navigate(HadithScreen(bookSlug = chapter.bookSlug, chapter = chapter.id))
                             },
                         horizontalAlignment = Alignment.Start,
                     ) {
                         Text(
                             modifier = Modifier.padding(bottom = 4.dp),
-                            text = book.chapterArabic,
+                            text = chapter.chapterArabic,
                             fontSize = 18.sp,
                             color = Color.Black
                         )
-                        Text(book.chapterEnglish, fontSize = 14.sp, color = Color.Gray)
+                        Text(chapter.chapterEnglish, fontSize = 14.sp, color = Color.Gray)
                     }
                 }
             }
